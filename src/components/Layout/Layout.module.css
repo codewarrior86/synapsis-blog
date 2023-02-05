@@ -1,0 +1,470 @@
+.layout{
+  /* background-color: var(--base-color); */
+    background-color: var(--body-color);
+    min-height: 100vh;
+    padding-top: 97px;
+}
+
+.mobile{
+  display: none;
+}
+.menuHeaderMobile{
+  display: none;
+  font-size: var(--small-font-size);
+
+  /* padding-bottom: 20px;
+  border-bottom: 1px solid black; */
+}
+
+
+/* =============================== Header ============================ */
+.wrapAva{
+  position: relative;
+  cursor: pointer;
+}
+.wrapAva:hover .avaMenu{
+  display: block;
+}
+
+.avaHeader:hover{
+  border: 3px solid var(--primary-color);
+}
+
+.avaHeader{
+  width: 50px;
+  height: 50px ;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avaMenu{
+  /* z-index: 111; */
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+ 
+  box-shadow: 0 0 3px rgba(85, 85, 85, 0.582);
+  padding: 10px 0;
+  background-color: var(--base-color);
+  width: 200px;
+}
+
+.avaMenu ul{
+
+}
+
+.avaMenu ul li{
+  list-style: none;
+  font-size: var(--small-font-size);  
+  padding: 5px 20px;
+}
+
+.avaMenu ul li:hover{
+  background-color: lightblue;
+}
+
+.avaMenu ul li:last-child{
+  border-top: 1px solid black;
+  margin-top: 30px;
+  text-align: end;
+}
+.avaMenu ul li:last-child:hover{
+background-color: red;
+color: white;
+}
+
+.itemMenu :last-child{
+ /* padding: 0 100px; */
+}
+
+
+.navbar{
+    /* background-color: var(--body-color); */
+    background-color: rgba(229, 239, 255, 0.541);
+    padding:var(--pd-header-footer);    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: 0.5s;
+    /* position: relative;     */
+
+    /* align-self: flex-start; */
+    /* position: -webkit-sticky; */
+    position: fixed;  
+    top: 0px;  
+    width: 100%;
+    z-index: 111;
+}
+
+/* .navbar_toggle{
+    background-color: lightblue;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: 0.5s;
+    padding-bottom: 10px;
+    position: relative;    
+} */
+
+.headerActive{
+  /* background-color: rgba(255, 255, 255, 0.733); */
+  background-color: white;
+  box-shadow: 0px 0px 15px rgba(80, 80, 80, 0.5);
+}
+
+.wrapBrand{
+    display: flex;
+    align-items: center;    
+    cursor: pointer;
+}
+ 
+.brand{
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.logo{
+    width: 50px;
+    height: 50px;
+    object-fit: contain; 
+    margin-right: 10px;
+}
+
+.wrapButtonsMobile{
+  display: none;
+}
+
+.wrapSearch{
+  position: relative;
+}
+
+.search{
+    padding: 5px 10px;
+    width: 200px;
+}
+
+.iconSearch{
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translate(0,-50%);
+}
+
+
+
+.menu{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    transition: 0.5s;
+}
+.menu li{
+  /* border: 1px solid red; */
+    margin-inline: 10px;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 10px;
+}
+.menu li:hover::after {
+    color: var(--primary-color);
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color:blue ;
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+}
+
+.menu li:last-child:hover::after{
+  content: "";
+}
+
+
+
+.wrapMenu{
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 100px;
+    
+}
+
+
+
+/* HAMBURGER MENU */
+.menuToggle {
+    display: none;
+    flex-direction: column;
+    height: 20px;
+    justify-content: space-between;
+    position: relative;
+  }
+  
+  .menuToggle input {
+    position: absolute;
+    z-index: 1;
+    /* opacity: 0.8; */
+    opacity: 0;
+    top: -5px;
+    left: -8px;
+    width: 40px;
+    height: 28px;
+    cursor: pointer;
+  }
+  
+  .menuToggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: rgb(172, 172, 172);
+    border-radius: 3px;
+    transition: all 0.5s;
+  }
+  
+  .menuToggle span:nth-child(2) {
+    /* sumbu poros. titik default putar (atas kiri) */
+    transform-origin: 0 0;
+  }
+  .menuToggle span:nth-child(4) {
+    /* sumbu poros. titik default putar (atas kiri) */
+    transform-origin: 0 100%;
+  }
+  
+  .menuToggle input:checked ~ span:nth-child(2) {
+    /* background-color: rgba(204, 201, 201, 0.815); */
+    transform: rotate(45deg);
+  }
+  .menuToggle input:checked ~ span:nth-child(3) {
+    transform: scale(0);
+  }
+  .menuToggle input:checked ~ span:nth-child(4) {
+    /* background-color: rgba(204, 201, 201, 0.815);   */
+    transform: rotate(-45deg);
+  }
+  
+  .menuToggle input:checked ~ .sideMenu {
+    /* display: none; */
+  }
+
+
+  .menu__active{
+    display: flex;
+}
+
+.iconMenu{
+  display: none;
+}
+
+
+
+
+/* sm mobile */
+@media (max-width: 576px) {
+  .menuHeaderMobile{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .iconMenu{
+    display: inline-block;
+  }
+  .layout{
+    padding-top: 90px;
+  }
+  .mobile{
+    display: block;
+  }
+    .navbar{
+      padding:20px 10px;    
+    }
+
+    .brand{
+      font-size: var(--small-font-size);
+    }
+
+    .menuToggle {
+      display: flex;
+    }
+
+    .wrapMenu{
+        gap:25px
+    }
+
+    .menu{
+        /* border: 1px solid red;
+        z-index: 2; */
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: start;
+        position: fixed;
+        top:90px;
+        right: -1000px;
+        width: 50vw;
+        height: 100vh;
+        background-color: lightblue;
+        padding: 20px;
+    }
+    .menu li:last-child{
+      margin-top: 10px;
+    }
+    .menu li:last-child:hover::after{
+      content: "";
+      display: none;
+    }
+    .menu__active{
+        right: 0;
+    }
+
+    .socialMediaFooter{
+      margin-top: 30px;
+    }
+    
+    .wrapButtons{
+      display: none;
+    }
+    .wrapButtonsMobile{
+      display: block;
+    }
+
+    .wrapAva{
+      display: none;
+    }
+  }
+  
+  
+  /* tablet / ipad */
+  @media (min-width: 577px) and (max-width: 991px) {
+    .menuHeaderMobile{
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .iconMenu{
+      display: inline-block;
+    }
+    .layout{
+      padding-top: 90px;
+    }
+
+    .mobile{
+      display: block;
+    }
+    .navbar{
+      padding:20px 10px;    
+    }
+
+    .menuToggle {
+      display: flex;
+    }
+
+    .wrapMenu{
+        gap:50px
+    }
+
+    .menu{
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: start;
+        position: fixed;
+        top:90px;
+        right: -1000px;
+        width: 50vw;
+        height: 100vh;
+        background-color: lightblue;
+        padding: 20px;
+    }
+
+    .menu li:last-child:hover::after{
+      content: "";
+    }
+    .menu__active{
+        right: 0;
+    }
+
+    .socialMediaFooter{
+      margin-top: 30px;
+    }
+
+
+    .wrapButtons{
+      display: none;
+    }
+    .wrapButtonsMobile{
+      display: block;
+    }
+
+    .wrapAva{
+      display: none;
+    }
+
+  }
+
+
+
+
+
+/* ======================= FOOTER ========================= */
+.footer{
+    padding:var(--pd-header-footer);
+    background-color: var(--dark-color);
+    border-top: 3px solid rgba(0, 0, 0, 0.25);
+    color: var(--lighter-color);
+    position: relative;
+    z-index: 2;
+}
+
+.wrapMenuFooter{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.menuFooter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap:20px;
+}
+
+.menuFooter li{
+  list-style: none;
+  position: relative;
+}
+
+.menuFooter li:hover::after{
+  content:"";
+  width: 100%;
+  height: 2px;
+  background-color:blue ;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+}
+
+.socialMediaFooter{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
