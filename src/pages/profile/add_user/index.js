@@ -224,9 +224,9 @@ const AddUser = () => {
             )
 
             if (res.status == 200 || res.status == 201) {
-                console.log("create user success!")
+                console.log("edit user success!")
                 console.log(res)
-                toast.success("User Created Successfully!");
+                toast.success("User Updated Successfully!");
                 forceUpdate();
             }
 
@@ -382,17 +382,23 @@ const AddUser = () => {
                                 <div className="form-group m-t-40">
                                     <CustomButton
                                         type="submit"
+                                        buttonStyle={STYLES.primarySolid}
+                                        buttonSize={SIZES.large}
                                         onClick={() => setSubmitStatus('update')}
                                     >
-                                        Update
+                                        Edit
                                     </CustomButton>
                                     <CustomButton
                                         type="submit"
+                                        buttonStyle={STYLES.primarySolid}
+                                        buttonSize={SIZES.large}
                                         onClick={() => setSubmitStatus('create')}
                                     >
                                         Create
                                     </CustomButton>
                                     <CustomButton
+                                        buttonStyle={STYLES.primarySolid}
+                                        buttonSize={SIZES.large}
                                         onClick={() => resetForm()}
                                     >
                                         Reset
@@ -440,7 +446,7 @@ const AddUser = () => {
                                                                 }}
 
                                                             >
-                                                                Update
+                                                                Edit
                                                             </CustomButton>
                                                             <CustomButton
                                                                 buttonStyle={STYLES.alertSolid}

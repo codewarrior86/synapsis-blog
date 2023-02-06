@@ -95,9 +95,9 @@
 
 /* sm mobile */
 @media (max-width: 576px) {
-    /* .postCard{
-        width: 100%;
-    } */
+    .postCard{
+        width: 290px;
+    }
     .wrapImgCard{
         width: 100%;
     }

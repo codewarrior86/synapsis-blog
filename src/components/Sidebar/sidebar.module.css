@@ -6,6 +6,7 @@
     grid-area: sidebar;
     height: 100vh;
     background-color: var(--primary-color);    
+    color: var(--base-color);
     position: fixed;
     z-index: 1;    
 }

@@ -294,7 +294,7 @@ const Add = () => {
                                     <label>User ID</label>
                                     <input
                                         className="form-input"
-                                        type="number"
+                                        type="text"
                                         name="user_id"
                                         value={state.user_id}
                                         onChange={handleInputChange}
@@ -309,17 +309,23 @@ const Add = () => {
                                     <label></label>
                                     <CustomButton
                                         type="submit"
+                                        buttonStyle={STYLES.primarySolid}
+                                        buttonSize={SIZES.large}
                                         onClick={() => setSubmitStatus('update')}
                                     >
-                                        Update
+                                        Edit
                                     </CustomButton>
                                     <CustomButton
                                         type="submit"
+                                        buttonStyle={STYLES.primarySolid}
+                                        buttonSize={SIZES.large}
                                         onClick={() => setSubmitStatus('create')}
                                     >
                                         Create
                                     </CustomButton>
                                     <CustomButton
+                                        buttonStyle={STYLES.primarySolid}
+                                        buttonSize={SIZES.large}
                                         onClick={() => resetForm()}
                                     >
                                         Reset
@@ -365,7 +371,7 @@ const Add = () => {
                                                                 }
                                                                 }
                                                             >
-                                                                Update
+                                                                Edit
                                                             </CustomButton>
                                                             <CustomButton
                                                                 buttonStyle={STYLES.alertSolid}
