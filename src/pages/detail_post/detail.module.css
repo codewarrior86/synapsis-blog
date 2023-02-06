@@ -189,7 +189,8 @@
         flex-wrap: wrap;
     }
     .comment{
-        flex-wrap: wrap;
+        /* flex-wrap: wrap; */
+        flex-direction: column;
     }
 
     .emailComments{

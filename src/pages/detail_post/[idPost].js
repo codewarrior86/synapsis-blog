@@ -142,7 +142,7 @@ const DetailPost = () => {
                                                     </div>
                                                     <div>{comment.body}</div>
                                                 </div>
-                                                <div className={styles.emailComments}>{comment.email}</div>
+                                                <div className={styles.emailComments}>{comment.email}</div> 
                                             </div>
                                             <div className={styles.actionsComment}>
                                                 <div className={styles.thumbs}>

@@ -33,7 +33,7 @@ export default function Home() {
     );
     const data = await res.data;
     return data;
-  };  
+  };
 
   // pagination
   const handlePageClick = async (data) => {
@@ -59,6 +59,31 @@ export default function Home() {
           </div>
         </section>
 
+        <section className='container m-t-30'>
+          <h2 className='section_title'>Recommendation Posts</h2>
+          <div className='divider' />
+          <div className='carousel'>
+            {items?.map((item) => {
+              return (
+                <div className='carouselItem'>
+                  <Card
+                    img="../img/comp.jpg"
+                    alt=""
+                    title={item.title}
+                    desc={item.body}
+                    ava="../img/user.jpg"
+                    namaUser="Anonymous"
+                    time="02-02-2023"
+                    onClick={() => {
+                      Router.push(`/detail_post/${item.id}`)
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
         <section className='container wrapRecentPosts'>
           <h2 className='section_title'>Recent Posts</h2>
           <div className='divider' />
@@ -70,11 +95,11 @@ export default function Home() {
                   alt=""
                   title={item.title}
                   desc={item.body}
-                  ava="../img/gallery.jpg"
+                  ava="../img/user2.jpg"
                   namaUser="Anonymous"
                   time="02-02-2023"
                   onClick={() => {
-                    Router.push(`/detail_post/${item.id}`)
+                    Router.push(`/detail_post/${item.id}`);
                   }}
                 />
               );

@@ -275,7 +275,7 @@ const Add = () => {
                                     }
                                 </div>
                                 <div className="form-group">
-                                    <label>Body</label>
+                                    <label>Article</label>
                                     <textarea
                                         className="form-input-area"
                                         rows={9}

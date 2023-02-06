@@ -13,7 +13,7 @@
 
 
   /* colors */
-  --primary-color:rgb(140, 187, 231);
+  --primary-color:rgb(127, 169, 214);
   --secondary-color:rgb(0, 126, 148);
   --light-color:rgb(238, 238, 238);
   --lighter-color:rgb(209, 209, 209);
@@ -346,6 +346,19 @@ a {
   object-fit: cover;
 }
 
+.carousel{
+  overflow-x: auto;
+  display: flex;
+  gap: 15px;
+}
+
+.carouselItem{
+  width: 350px;
+}
+
+
+
+
 /* =======================BUTTON========================= */
 .button {
   border: none;
@@ -470,6 +483,10 @@ a {
   
   .pagination{
     flex-wrap: wrap;
+  }
+
+  .carouselItem{
+    width:400px ;
   }
 
 }

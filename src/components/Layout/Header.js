@@ -59,7 +59,7 @@ const Header = () => {
                     </div>
                     <ul className={`${styles.menu} ${iconToggle ? styles.menu__active : ""}`}>
                         <div className={`${styles.menuHeaderMobile}  m-b-30`}>
-                            <img src="../img/corp.jpg" className={`${styles.avaHeader} `} />
+                            <img src="../img/user.jpg" className={`${styles.avaHeader} `} />
                             <h4>Anonymous</h4>
                         </div>
                         <li>
@@ -146,7 +146,7 @@ const Header = () => {
 
                 {/* avatar - hover menu */}
                 <div className={styles.wrapAva}>
-                    <img src="../img/corp.jpg" className={styles.avaHeader} />
+                    <img src="../img/user.jpg" className={styles.avaHeader} />
                     <div className={styles.avaMenu}>
                         <ul>
                             <li>
