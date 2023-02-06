@@ -69,7 +69,7 @@ const Header = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link href="#">
+                            <Link href="/profile/add">
                                 <i className={`${styles.iconMenu}  fa-brands fa-blogger-b`} style={{ marginRight: 10 }} ></i>
                                 Blog
                             </Link>
@@ -99,8 +99,14 @@ const Header = () => {
                             </Link>
                         </li>
                         <li>
+                            <Link href="/profile/add_user" className={`${styles.itemMenu} ${styles.mobile}`}>
+                                <i style={{ marginRight: 10 }} className={`${styles.iconMenu}  fa-solid fa-list`}></i>
+                                Users List
+                            </Link>
+                        </li>
+                        <li>
                             <Link href="#logout" className={`${styles.itemMenu} ${styles.mobile}`}>
-                                <i style={{ marginRight: 3 }} className={`${styles.iconMenu}  fa-solid fa-right-from-bracket`}></i>
+                                <i style={{ marginRight: 10 }} className={`${styles.iconMenu}  fa-solid fa-right-from-bracket`}></i>
                                 Logout
                             </Link>
                         </li>
@@ -151,6 +157,9 @@ const Header = () => {
                             </li>
                             <li>
                                 <Link href="/profile/add" className={styles.itemMenu}><i className="fa-solid fa-list" style={{ marginRight: 10 }}></i>Posts List</Link>
+                            </li>
+                            <li>
+                                <Link href="/profile/add_user" className={styles.itemMenu}><i className="fa-solid fa-list" style={{ marginRight: 10 }}></i>Users List</Link>
                             </li>
                             <li>
                                 <Link href="#logout" className={styles.itemMenu}><i className="fa-solid fa-right-from-bracket" style={{ marginRight: 3 }}></i> Logout</Link>

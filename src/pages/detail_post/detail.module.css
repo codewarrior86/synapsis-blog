@@ -163,6 +163,15 @@
 
 /* sm mobile */
 @media (max-width: 576px) {
+    .wrapPage{
+        padding: 40px 10vw;
+    }
+    .post{
+        padding: 0;
+    }
+    .wrapPost{
+        margin-top: 30px;
+    }
     .wrapDetail{
         flex-direction: column;
     }
@@ -170,10 +179,37 @@
     .imgDetail{
         width: 100%;
     }
+
+    .wrapComments{
+        padding: 0;
+    }
+
+    .giveComment{
+        padding: 0;
+        flex-wrap: wrap;
+    }
+    .comment{
+        flex-wrap: wrap;
+    }
+
+    .emailComments{
+        top: 0;
+        right:30px;
+        width: 50%;
+}
 }
 
 /* tablet / ipad */
 @media (min-width: 577px) and (max-width: 991px) {
+    .wrapPage{
+        padding: 50px 10vw;
+    }
+    .post{
+        padding: 0;
+    }
+    .wrapPost{
+        margin-top: 30px;
+    }
     .wrapDetail{
         flex-direction: column;
     }
