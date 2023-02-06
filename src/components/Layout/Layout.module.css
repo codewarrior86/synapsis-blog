@@ -310,8 +310,9 @@ color: white;
         right: -1000px;
         width: 70vw;
         height: 100vh;
-        background-color: lightblue;
-        padding: 20px;
+        background-color: var(--base-color);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+        padding: 20px;        
     }    
     .menu li:last-child{
       border-top: 1px solid rgba(0, 0, 0, 0.25);
@@ -354,6 +355,7 @@ color: white;
       display: flex;
       align-items: center;
       gap: 20px;
+      width: 100%;
       padding-bottom: 20px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.25);
     }
@@ -405,6 +407,7 @@ color: white;
     }
     .menu li:last-child:hover::after{
       content: "";
+      display: none;
     }
     .menu__active{
         right: 0;
