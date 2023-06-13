@@ -7,7 +7,7 @@ import Card from '@/components/Card'
 import ReactPaginate from 'react-paginate'
 import { useEffect, useState } from 'react'
 import Router from 'next/router';
-import { postsAPI } from './api/api.config'
+import urlAPI, { postsAPI } from './api/api.config'
 import axios from 'axios'
 
 // const inter = Inter({ subsets: ['latin'] })
@@ -28,7 +28,7 @@ export default function Home() {
 
   // fetch posts
   const fetchPosts = async (currentPage) => {
-    const res = await axios.get(
+    const res = await urlAPI.get(
       `${postsAPI}?page=${currentPage}&per_page=${limit}`
     );
     const data = await res.data;

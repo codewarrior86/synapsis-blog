@@ -1,7 +1,7 @@
 import CustomButton, { SIZES, STYLES } from "@/components/CustomButton";
 import Layout from "@/components/Layout";
 import Sidebar from "@/components/Sidebar";
-import { postsAPI, tokenAPI, usersAPI } from "@/pages/api/api.config";
+import urlAPI, { postsAPI, tokenAPI, usersAPI } from "@/pages/api/api.config";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -9,16 +9,38 @@ import styles from "../profile.module.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useGlobalContext } from "@/context/GlobalContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers, getAllUsers, deleteUser, createUser, editUser } from "@/redux/features/users/userSlice";
 
 const AddUser = () => {
+
+
+    // =========== REDUX Init =============
+    const dispatch = useDispatch();
+
+    // const { data, loading, isSuccess, message } = useSelector(state => state.user);
+
+    // const users = useSelector((store) => store.user.data);
+    const users = useSelector(getAllUsers);
+    const success = useSelector((store) => store.user.isSuccess);   //state isSuccess user
+    const loading = useSelector((store) => store.user.loading);   //state loading user
+    const message = useSelector((store) => store.user.message);   //state message user
+    // const error = useSelector((store) => store.user.error);   //state error user
+
+
+
+
+
+
     const formRef = useRef();
     const scrollToForm = () => {
         formRef.current.scrollIntoView();
     }
 
-    const { forceUpdate } = useGlobalContext();
+    const { forceUpdate, valueForce } = useGlobalContext();
 
     const defaultState = {
+        id: null,
         name: "",
         email: "",
         gender: "",
@@ -40,254 +62,259 @@ const AddUser = () => {
         setState(defaultState)
     }
 
+
+    // Switch CREATE or EDIT
     const [submitStatus, setSubmitStatus] = useState('create');
     const [idUser, setIdUser] = useState();
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // console.log(state);
-        // console.log("idUser");
-        // console.log(idUser);
-
         setTimeout(() => {
             if (submitStatus === "create") {
-                createUser();
+                // createUser();
+
+                // CREATE - REDUX
+                handleCreateUser();
+
             } else {
-                updateUser(idUser);
+                // updateUser(idUser);
+
+                // UPDATE - REDUX
+                handleUpdateUser();
+
             }
         }, 2000);
     };
 
     // POST
-    const createUser = async () => {
-        // validations
-        // name
-        if (state.name == "") {
-            setErrorMessage(prev => ({
-                ...prev,
-                name: "Name not filled !"
-            }))
-        } else {
-            setErrorMessage(prev => ({
-                ...prev,
-                name: ""
-            }))
-        }
-        // email
-        if (state.email == "") {
-            setErrorMessage(prev => ({
-                ...prev,
-                email: "Email not filled !"
-            }))
-        } else {
-            setErrorMessage(prev => ({
-                ...prev,
-                email: ""
-            }))
-        }
-        // gender
-        if (state.gender == "") {
-            setErrorMessage(prev => ({
-                ...prev,
-                gender: "Gender not selected !"
-            }))
-        } else {
-            setErrorMessage(prev => ({
-                ...prev,
-                gender: ""
-            }))
-        }
-        // status
-        if (state.status == "") {
-            setErrorMessage(prev => ({
-                ...prev,
-                status: "Status not selected !"
-            }))
-        } else {
-            setErrorMessage(prev => ({
-                ...prev,
-                status: ""
-            }))
-        }
+    // const createUser = async () => {
+    //     // validations
+    //     // name
+    //     if (state.name == "") {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             name: "Name not filled !"
+    //         }))
+    //     } else {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             name: ""
+    //         }))
+    //     }
+    //     // email
+    //     if (state.email == "") {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             email: "Email not filled !"
+    //         }))
+    //     } else {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             email: ""
+    //         }))
+    //     }
+    //     // gender
+    //     if (state.gender == "") {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             gender: "Gender not selected !"
+    //         }))
+    //     } else {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             gender: ""
+    //         }))
+    //     }
+    //     // status
+    //     if (state.status == "") {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             status: "Status not selected !"
+    //         }))
+    //     } else {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             status: ""
+    //         }))
+    //     }
 
-        try {
-            const res = await axios.post(`${usersAPI}`,
-                {
-                    "name": state.name,
-                    "email": state.email,
-                    "gender": state.gender,
-                    "status": state.status
-                },
-                {
-                    headers: {
-                        // "Content-Type": "multipart/form-data",
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${tokenAPI}`
+    //     try {
+    //         const res = await urlAPI.post(`${usersAPI}`,
+    //             {
+    //                 "name": state.name,
+    //                 "email": state.email,
+    //                 "gender": state.gender,
+    //                 "status": state.status
+    //             }
+    //         )
 
-                    }
-                }
-            )
-
-            if (res.status == 200 || res.status == 201) {
-                console.log("create user success!")
-                console.log(res)
-                toast.success("User Created Successfully!");
-                forceUpdate();
-            }
+    //         if (res.status == 200 || res.status == 201) {
+    //             console.log("create user success!")
+    //             console.log(res)
+    //             toast.success("User Created Successfully!");
+    //             forceUpdate();
+    //         }
 
 
-        } catch (error) {
-            console.log("error create user!");
-            console.log(error);
+    //     } catch (error) {
+    //         console.log("error create user!");
+    //         console.log(error);
 
-            if (error.response.data[0].message === "has already been taken") {
-                toast.error("Email has been registered, please input another email !");
-            }
-            else if (error.response.data[0].message === "can't be blank" || error.response.data[0].message === "can't be blank, can be male of female") {
-                toast.error("Please fill all input's form !");
-            }
-            else {
-                toast.error("Post Failed to Create!");
-            }
-        }
+    //         if (error.response.data[0].message === "has already been taken") {
+    //             toast.error("Email has been registered, please input another email !");
+    //         }
+    //         else if (error.response.data[0].message === "can't be blank" || error.response.data[0].message === "can't be blank, can be male of female") {
+    //             toast.error("Please fill all input's form !");
+    //         }
+    //         else {
+    //             toast.error("Post Failed to Create!");
+    //         }
+    //     }
 
-    }
+    // }
 
     // PUT
-    const updateUser = async (id) => {
-        // validations
-        // name
-        if (state.name == "") {
-            setErrorMessage(prev => ({
-                ...prev,
-                name: "Name not filled !"
-            }))
-        } else {
-            setErrorMessage(prev => ({
-                ...prev,
-                name: ""
-            }))
-        }
-        // email
-        if (state.email == "") {
-            setErrorMessage(prev => ({
-                ...prev,
-                email: "Email not filled !"
-            }))
-        } else {
-            setErrorMessage(prev => ({
-                ...prev,
-                email: ""
-            }))
-        }
-        // gender
-        if (state.gender == "") {
-            setErrorMessage(prev => ({
-                ...prev,
-                gender: "Gender not selected !"
-            }))
-        } else {
-            setErrorMessage(prev => ({
-                ...prev,
-                gender: ""
-            }))
-        }
-        // status
-        if (state.status == "") {
-            setErrorMessage(prev => ({
-                ...prev,
-                status: "Status not selected !"
-            }))
-        } else {
-            setErrorMessage(prev => ({
-                ...prev,
-                status: ""
-            }))
-        }
+    // const updateUser = async (id) => {
+    //     // validations
+    //     // name
+    //     if (state.name == "") {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             name: "Name not filled !"
+    //         }))
+    //     } else {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             name: ""
+    //         }))
+    //     }
+    //     // email
+    //     if (state.email == "") {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             email: "Email not filled !"
+    //         }))
+    //     } else {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             email: ""
+    //         }))
+    //     }
+    //     // gender
+    //     if (state.gender == "") {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             gender: "Gender not selected !"
+    //         }))
+    //     } else {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             gender: ""
+    //         }))
+    //     }
+    //     // status
+    //     if (state.status == "") {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             status: "Status not selected !"
+    //         }))
+    //     } else {
+    //         setErrorMessage(prev => ({
+    //             ...prev,
+    //             status: ""
+    //         }))
+    //     }
 
-        try {
-            const res = await axios.put(`${usersAPI}/${id}`,
-                {
-                    "name": state.name,
-                    "email": state.email,
-                    "gender": state.gender,
-                    "status": state.status
-                },
-                {
-                    headers: {
-                        // "Content-Type": "multipart/form-data",
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${tokenAPI}`
+    //     try {
+    //         const res = await urlAPI.put(`${usersAPI}/${id}`,
+    //             {
+    //                 "name": state.name,
+    //                 "email": state.email,
+    //                 "gender": state.gender,
+    //                 "status": state.status
+    //             },
+    //             // {
+    //             //     headers: {
+    //             //         // "Content-Type": "multipart/form-data",
+    //             //         "Content-Type": "application/json",
+    //             //         "Authorization": `Bearer ${tokenAPI}`
 
-                    }
-                }
-            )
+    //             //     }
+    //             // }
+    //         )
 
-            if (res.status == 200 || res.status == 201) {
-                console.log("edit user success!")
-                console.log(res)
-                toast.success("User Updated Successfully!");
-                forceUpdate();
-            }
+    //         if (res.status == 200 || res.status == 201) {
+    //             console.log("edit user success!")
+    //             console.log(res)
+    //             toast.success("User Updated Successfully!");
+    //             forceUpdate();
+    //         }
 
-        } catch (error) {
-            console.log("error update user!");
-            console.log(error);
-            if (error.response.data[0].message === "has already been taken") {
-                toast.error("Email has been registered, please input another email !");
-            } else {
-                toast.error("User Failed to Updated!");
-            }
-        }
+    //     } catch (error) {
+    //         console.log("error update user!");
+    //         console.log(error);
+    //         if (error.response.data[0].message === "has already been taken") {
+    //             toast.error("Email has been registered, please input another email !");
+    //         } else {
+    //             toast.error("User Failed to Updated!");
+    //         }
+    //     }
 
-    }
+    // }
+
 
     // DELETE
-    const deleteUser = async (id) => {
-        try {
-            const res = await axios.delete(`${usersAPI}/${id}`,
-                {
-                    headers: {
-                        "Authorization": `Bearer ${tokenAPI}`
+    // const deleteUser = async (id) => {        
+    //     try {
+    //         const res = await urlAPI.delete(`${usersAPI}/${id}`,
+    //             {
+    //                 headers: {
+    //                     "Authorization": `Bearer ${tokenAPI}`
 
-                    }
-                }
-            )
+    //                 }
+    //             }
+    //         )
 
-            if (res.status == 200 || res.status == 201 || res.status == 204) {
-                console.log("delete user success!")
-                console.log(res)
-                toast.success("User Deleted!");
-                forceUpdate();
-            }
+    //         if (res.status == 200 || res.status == 201 || res.status == 204) {
+    //             console.log("delete user success!")
+    //             console.log(res)
+    //             toast.success("User Deleted!");
+    //             forceUpdate();
+    //         }
 
-        } catch (error) {
-            console.log("error delete user!");
-            console.log(error);
-            toast.error("Failed to Delete User!");
-        }
-    }
-
-    const [listUsers, setListUsers] = useState([]);
-    const fetchListUsers = async () => {
-        try {
-            const res = await axios.get(
-                `${usersAPI}?page=1&per_page=25`
-            );
-            const data = await res.data;
-            setListUsers(data);
-        } catch (error) {
-            console.log("error fetch user!")
-        }
-    };
-
-    useEffect(() => {
-        fetchListUsers();
-    }, [state])
+    //     } catch (error) {
+    //         console.log("error delete user!");
+    //         console.log(error);
+    //         toast.error("Failed to Delete User!");
+    //     }
+    // }
 
 
-    const getUserData = (name, email, gender, status) => {
+    // GET
+    // const [listUsers, setListUsers] = useState([]);
+    // const fetchListUsers = async () => {
+    //     try {
+    //         const res = await urlAPI.get(
+    //             `${usersAPI}?page=1&per_page=25`
+    //         );
+    //         const data = await res.data;
+    //         setListUsers(data);
+    //     } catch (error) {
+    //         console.log("error fetch user!")
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     fetchListUsers();
+    //     console.log("value : " + valueForce)
+    // }, [valueForce])
+
+
+
+    // get data to form input for edit
+    const getUserData = (id, name, email, gender, status) => {
         let update = {
+            "id": id,
             "name": name,
             "email": email,
             "gender": gender,
@@ -296,6 +323,237 @@ const AddUser = () => {
 
         setState(update);
     }
+
+    // ===================================== REDUX =======================================
+
+
+    // GET - REDUX
+    useEffect(() => {
+        dispatch(fetchUsers());
+    }, [valueForce])
+
+    // DELETE - REDUX
+    const handleDeleteUser = async (id) => {
+        dispatch(deleteUser(id))
+
+        if (success) {
+            console.log("delete user success!")
+            toast.success("User Deleted!");
+            // forceUpdate();
+        } else {
+            console.log("error delete user!");
+            toast.error("Failed to Delete User!");
+        }
+    }
+
+    // POST - REDUX
+    const handleCreateUser = async () => {
+        // validations
+        // name
+        if (state.name == "") {
+            setErrorMessage(prev => ({
+                ...prev,
+                name: "Name not filled !"
+            }))
+        } else {
+            setErrorMessage(prev => ({
+                ...prev,
+                name: ""
+            }))
+        }
+        // email
+        if (state.email == "") {
+            setErrorMessage(prev => ({
+                ...prev,
+                email: "Email not filled !"
+            }))
+        } else {
+            setErrorMessage(prev => ({
+                ...prev,
+                email: ""
+            }))
+        }
+        // gender
+        if (state.gender == "") {
+            setErrorMessage(prev => ({
+                ...prev,
+                gender: "Gender not selected !"
+            }))
+        } else {
+            setErrorMessage(prev => ({
+                ...prev,
+                gender: ""
+            }))
+        }
+        // status
+        if (state.status == "") {
+            setErrorMessage(prev => ({
+                ...prev,
+                status: "Status not selected !"
+            }))
+        } else {
+            setErrorMessage(prev => ({
+                ...prev,
+                status: ""
+            }))
+        }
+
+        // } catch (error) {
+        //     console.log("error create user!");
+        //     console.log(error);
+
+        //     if (error.response.data[0].message === "has already been taken") {
+        //         toast.error("Email has been registered, please input another email !");
+        //     }
+        //     else if (error.response.data[0].message === "can't be blank" || error.response.data[0].message === "can't be blank, can be male of female") {
+        //         toast.error("Please fill all input's form !");
+        //     }
+        //     else {
+        //         toast.error("Post Failed to Create!");
+        //     }
+        // }
+
+
+
+        let dataInput = {
+            "name": state.name,
+            "email": state.email,
+            "gender": state.gender,
+            "status": state.status
+        }
+
+        dispatch(createUser(dataInput))
+
+        console.log("========message========");
+        console.log(message)
+
+        if (success) {
+            toast.success("User Created Successfully!");
+            // toast.success(message);
+            forceUpdate();
+        } else {
+            // toast.error("Failed to Create User!");
+            toast.error(message);
+        }
+
+
+
+    }
+
+    // PUT - REDUX
+    const handleUpdateUser = async () => {
+        // validations
+        // name
+        if (state.name == "") {
+            setErrorMessage(prev => ({
+                ...prev,
+                name: "Name not filled !"
+            }))
+        } else {
+            setErrorMessage(prev => ({
+                ...prev,
+                name: ""
+            }))
+        }
+        // email
+        if (state.email == "") {
+            setErrorMessage(prev => ({
+                ...prev,
+                email: "Email not filled !"
+            }))
+        } else {
+            setErrorMessage(prev => ({
+                ...prev,
+                email: ""
+            }))
+        }
+        // gender
+        if (state.gender == "") {
+            setErrorMessage(prev => ({
+                ...prev,
+                gender: "Gender not selected !"
+            }))
+        } else {
+            setErrorMessage(prev => ({
+                ...prev,
+                gender: ""
+            }))
+        }
+        // status
+        if (state.status == "") {
+            setErrorMessage(prev => ({
+                ...prev,
+                status: "Status not selected !"
+            }))
+        } else {
+            setErrorMessage(prev => ({
+                ...prev,
+                status: ""
+            }))
+        }
+
+        // try {
+        //     const res = await urlAPI.put(`${usersAPI}/${id}`,
+        //         {
+        //             "name": state.name,
+        //             "email": state.email,
+        //             "gender": state.gender,
+        //             "status": state.status
+        //         },
+        //         // {
+        //         //     headers: {
+        //         //         // "Content-Type": "multipart/form-data",
+        //         //         "Content-Type": "application/json",
+        //         //         "Authorization": `Bearer ${tokenAPI}`
+
+        //         //     }
+        //         // }
+        //     )
+
+        //     if (res.status == 200 || res.status == 201) {
+        //         console.log("edit user success!")
+        //         console.log(res)
+        //         toast.success("User Updated Successfully!");
+        //         forceUpdate();
+        //     }
+
+        // } catch (error) {
+        //     console.log("error update user!");
+        //     console.log(error);
+        //     if (error.response.data[0].message === "has already been taken") {
+        //         toast.error("Email has been registered, please input another email !");
+        //     } else {
+        //         toast.error("User Failed to Updated!");
+        //     }
+        // }
+
+
+        let dataInput = {
+            "name": state.name,
+            "email": state.email,
+            "gender": state.gender,
+            "status": state.status
+        }
+
+        // dispatch(editUser(idUser, dataInput))
+        // dispatch(editUser(state.id, dataInput))
+        dispatch(editUser({
+            id: state.id,
+            dataUser: dataInput
+        }))
+
+        if (success) {
+            console.log("Updated user success!")
+            // toast.success("User Updated Successfully!");
+            forceUpdate();
+        } else {
+            console.log("error update user!");
+            // toast.error("User Failed to Updated!");
+        }
+
+    }
+
+
 
     return (
         <>
@@ -306,6 +564,7 @@ const AddUser = () => {
                         <section ref={formRef}>
                             <h2>Create Users</h2>
                             <form onSubmit={handleSubmit} className={`${styles["form-wrap"]}`}>
+                                <div>{state.id}</div>
                                 <div className="form-group">
                                     <label>Name</label>
                                     <input
@@ -426,22 +685,23 @@ const AddUser = () => {
                                     </thead>
                                     <tbody>
                                         {
-                                            listUsers?.map((user, index) => {
+                                            users?.map(({ id, name, email, gender, status }, index) => {
                                                 return (
                                                     <tr>
                                                         <td>{index + 1}</td>
-                                                        <td>{user.id}</td>
-                                                        <td>{user.name}</td>
-                                                        <td>{user.email}</td>
-                                                        <td>{user.gender}</td>
-                                                        <td>{user.status}</td>
+                                                        <td>{id}</td>
+                                                        <td>{name}</td>
+                                                        <td>{email}</td>
+                                                        <td>{gender}</td>
+                                                        <td>{status}</td>
                                                         <td className="colActions">
                                                             <CustomButton
                                                                 buttonStyle={STYLES.warningSolid}
                                                                 buttonSize={SIZES.small}
                                                                 onClick={() => {
-                                                                    setIdUser(user.id);
-                                                                    getUserData(user.name, user.email, user.gender, user.status);
+                                                                    setIdUser(id);
+                                                                    // alert("id : " + id);
+                                                                    getUserData(id, name, email, gender, status);
                                                                     scrollToForm();
                                                                 }}
 
@@ -451,7 +711,8 @@ const AddUser = () => {
                                                             <CustomButton
                                                                 buttonStyle={STYLES.alertSolid}
                                                                 buttonSize={SIZES.small}
-                                                                onClick={() => deleteUser(user.id)}
+                                                                // onClick={() => dispatch(deleteUser(id))}
+                                                                onClick={() => handleDeleteUser(id)}
                                                             >
                                                                 Delete
                                                             </CustomButton>

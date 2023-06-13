@@ -1,7 +1,7 @@
 import CustomButton, { SIZES, STYLES } from "@/components/CustomButton";
 import Layout from "@/components/Layout";
 import Sidebar from "@/components/Sidebar";
-import { postsAPI, tokenAPI } from "@/pages/api/api.config";
+import urlAPI, { postsAPI, tokenAPI } from "@/pages/api/api.config";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -17,7 +17,7 @@ const Add = () => {
         formRef.current.scrollIntoView();
     }
 
-    const { forceUpdate } = useGlobalContext();
+    const { forceUpdate, valueForce } = useGlobalContext();
     const defaultState = {
         title: "",
         body: "",
@@ -64,7 +64,7 @@ const Add = () => {
     const [listPosts, setListPosts] = useState([]);
     const fetchListPosts = async () => {
         try {
-            const res = await axios.get(
+            const res = await urlAPI.get(
                 `${postsAPI}?page=1&per_page=25`
             );
             const data = await res.data;
@@ -75,7 +75,8 @@ const Add = () => {
     };
     useEffect(() => {
         fetchListPosts();
-    }, [])
+        // console.log("value : " + valueForce)
+    }, [valueForce])
 
 
     // POST
@@ -118,9 +119,8 @@ const Add = () => {
             }))
         }
 
-
         try {
-            const res = await axios.post(`${postsAPI}`,
+            const res = await urlAPI.post(`${postsAPI}`,
                 {
                     "title": state.title,
                     "body": state.body,
@@ -190,19 +190,19 @@ const Add = () => {
         }
 
         try {
-            const res = await axios.put(`${postsAPI}/${id}`,
+            const res = await urlAPI.put(`${postsAPI}/${id}`,
                 {
                     "title": state.title,
                     "body": state.body,
                     "user_id": state.user_id
                 },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${tokenAPI}`
+                // {
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //         "Authorization": `Bearer ${tokenAPI}`
 
-                    }
-                }
+                //     }
+                // }
             )
 
             if (res.status == 200 || res.status == 201 || res.status == 204) {
@@ -223,15 +223,15 @@ const Add = () => {
     // DELETE
     const deletePost = async (id) => {
         try {
-            const res = await axios.delete(`${postsAPI}/${id}`,
-                {
-                    headers: {
-                        // "Content-Type": "multipart/form-data",
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${tokenAPI}`
+            const res = await urlAPI.delete(`${postsAPI}/${id}`,
+                // {
+                //     headers: {
+                //         // "Content-Type": "multipart/form-data",
+                //         "Content-Type": "application/json",
+                //         "Authorization": `Bearer ${tokenAPI}`
 
-                    }
-                }
+                //     }
+                // }
             )
 
             if (res.status == 200 || res.status == 201 || res.status == 204) {
@@ -247,8 +247,6 @@ const Add = () => {
             toast.error("Failed to Delete Post!");
         }
     }
-
-
 
     return (
         <>
